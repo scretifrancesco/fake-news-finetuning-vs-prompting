@@ -1,4 +1,4 @@
-# llm_fake_news
+# Fake News Detection: Fine-tuning vs Prompting
 
 Fake news classification using two approaches: fine-tuning of DistilBERT and a local LLM inference pipeline via Ollama with zero-shot and few-shot prompting strategies.
 
@@ -11,7 +11,7 @@ Built for the LLM and GenAI Course 2026, University of Turin.
 ## Project Structure
 
 ```
-llm_fake_news/
+fake-news-finetuning-vs-prompting/
 ├── README.md
 ├── PROGETTO.md               # course assignment report (Italian)
 ├── app.py                    # Streamlit dashboard + live demo
