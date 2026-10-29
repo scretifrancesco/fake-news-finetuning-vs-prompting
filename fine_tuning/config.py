@@ -11,7 +11,7 @@ DATASET = "GonzaloA/fake_news"
 DATASET_CONFIG = None  # nessun sottoconfig
 TEXT_COL = "text"
 LABEL_COL = "label"  # etichette 0=FAKE, 1=REAL
-MAX_LENGTH = 256  # lunghezza massima dei testi (tokenizzati) info rilevanti titolo o nelle prime righe del testo
+MAX_LENGTH = 256  # lunghezza massima dei testi (tokenizzati) info rilevanti nelle prime righe del testo
 
 
 # ── training ──────────────────────────────────────────────────────────
