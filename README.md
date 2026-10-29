@@ -119,3 +119,9 @@ streamlit run app.py
 | Few-shot  | 0.91          | 0.85 | 0.95 |
 
 The two parts are evaluated on sets of different size (500 vs 20 examples), so the comparison between fine-tuning and prompting is indicative. On 20 examples a difference of 0.05 corresponds to a single prediction.
+
+---
+
+## License
+
+Released under the [MIT License](LICENSE).
