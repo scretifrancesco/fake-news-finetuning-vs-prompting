@@ -1,8 +1,6 @@
 # Fake News Detection: Fine-tuning vs Prompting
 
-This project compares two ways of classifying news articles as fake or real, fine-tuning a small model on labelled data and prompting a general-purpose LLM with no task-specific training. DistilBERT (66M parameters) is fine-tuned on 1,000 articles from the GonzaloA/fake_news dataset under four hyperparameter configurations, while gemma2:2b runs locally through Ollama with zero-shot and few-shot prompts.
-
-The fine-tuned model reaches 0.98 accuracy on 500 validation articles, against a mean of 0.94 (zero-shot) and 0.91 (few-shot) for gemma2:2b over four runs on 20 articles. The comparison is indicative, since the two evaluation sets differ in size. Accuracy may also be inflated by a shortcut in the data. In the prompting sample, 9 of the 10 real articles open with a Reuters dateline, so both approaches may rely partly on source and style rather than content. A Streamlit dashboard presents the results and allows both approaches to be tested on new text.
+Can a small fine-tuned model beat a general-purpose LLM at spotting fake news? This project fine-tunes DistilBERT on labelled articles and compares it with gemma2:2b prompted through Ollama, without any training. The fine-tuned model is more accurate (0.98 against 0.94), though both may partly rely on surface cues such as a Reuters dateline in real articles. A Streamlit dashboard shows the results and lets you try both models.
 
 Built for the LLM and GenAI Course 2026, University of Turin.
 
