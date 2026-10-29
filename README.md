@@ -13,19 +13,24 @@ Built for the LLM Course 2026 — University of Turin.
 ```
 llm_fake_news/
 ├── README.md
-├── PROGETTO.md
+├── PROGETTO.md               # course assignment report (Italian)
 ├── app.py                    # Streamlit dashboard + live demo
+├── .streamlit/config.toml
 ├── fine_tuning/              # Part 1 — DistilBERT fine-tuning
 │   ├── config.py
 │   ├── train.py
+│   ├── requirements.txt
+│   ├── TRAINING_SUMMARY.md
 │   ├── data/
 │   │   └── dataset.py
 │   ├── model/
 │   │   └── model.py
 │   ├── training/
-│   │   └── metrics.py
+│   │   ├── metrics.py
+│   │   └── trainer.py
 │   └── results/              # checkpoints (not versioned)
 └── ollama_pipeline/          # Part 2 — Ollama pipeline
+    ├── README.md
     ├── prompts.py
     ├── pipeline.py
     ├── comparator.py
@@ -43,7 +48,6 @@ llm_fake_news/
 
 ```bash
 pip install -r fine_tuning/requirements.txt
-pip install requests streamlit plotly scikit-learn matplotlib
 ```
 
 ### Ollama
@@ -94,8 +98,24 @@ streamlit run app.py
 
 ## Results
 
-| Approach                            | Accuracy  |
-| ----------------------------------- | --------- |
-| DistilBERT fine-tuned (small_batch) | **0.980** |
-| Ollama zero-shot (gemma2:2b)        | 0.950     |
-| Ollama few-shot (gemma2:2b)         | 0.900     |
+### DistilBERT fine-tuning
+
+`distilbert-base-uncased` on [`GonzaloA/fake_news`](https://huggingface.co/datasets/GonzaloA/fake_news), trained on 1,000 sampled examples and evaluated on 500 validation examples (seed 42, max length 256).
+
+| Config      | Learning rate | Batch | Epochs | Val. accuracy |
+| ----------- | ------------- | ----- | ------ | ------------- |
+| baseline    | 2e-5          | 16    | 3      | 0.978         |
+| high_lr     | 5e-5          | 16    | 3      | 0.974         |
+| more_epochs | 2e-5          | 16    | 5      | 0.978         |
+| small_batch | 2e-5          | 8     | 3      | **0.980**     |
+
+### Ollama pipeline
+
+`gemma2:2b` on 20 samples from the same dataset, 4 runs per strategy.
+
+| Strategy  | Mean accuracy | Range       |
+| --------- | ------------- | ----------- |
+| Zero-shot | 0.94          | 0.90 – 0.95 |
+| Few-shot  | 0.91          | 0.85 – 0.95 |
+
+The two parts are evaluated on sets of different size (500 vs 20 examples), so the comparison between fine-tuning and prompting is indicative. On 20 examples a difference of 0.05 corresponds to a single prediction.
