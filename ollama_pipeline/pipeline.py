@@ -50,7 +50,7 @@ def query_ollama(prompt: str, model: str = MODEL) -> str:
 
 
 def parse_label(text: str) -> str:
-    """normalizza l'output del modello — ollama non risponde sempre con una parola sola"""
+    """normalizza l'output del modello, ollama non risponde sempre con una parola sola"""
     # converte in maiuscolo e estrae l'etichetta dalla risposta
     upper = text.strip().upper()
     if "FAKE" in upper:

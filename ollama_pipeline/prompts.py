@@ -2,7 +2,7 @@
 costruzione dei prompt per il task di classificazione fake news
 """
 
-# esempi fissi per il few-shot — presi fuori dal validation set
+# esempi fissi per il few-shot, presi fuori dal validation set
 # per non contaminare la valutazione
 FEW_SHOT_EXAMPLES = [
     (

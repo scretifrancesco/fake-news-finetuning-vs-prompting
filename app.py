@@ -1,5 +1,5 @@
 """
-app streamlit unificata — llm fake news
+app streamlit unificata, llm fake news
 lancia con: streamlit run app.py
 ollama deve girare in locale per la demo live
 """
@@ -125,7 +125,7 @@ CONFIGS = [
         "batch": 16,
         "epochs": 3,
         "wd": 0.01,
-        "accuracy": 0.9740,
+        "accuracy": 0.9780,
     },
     {
         "name": "high_lr",
@@ -141,7 +141,7 @@ CONFIGS = [
         "batch": 16,
         "epochs": 5,
         "wd": 0.01,
-        "accuracy": 0.9720,
+        "accuracy": 0.9780,
     },
     {
         "name": "small_batch",
@@ -268,7 +268,7 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(
 )
 
 # ══════════════════════════════════════════════════════════════════════════════
-# TAB 1 — INTRODUZIONE
+# TAB 1: INTRODUZIONE
 # ══════════════════════════════════════════════════════════════════════════════
 
 with tab1:
@@ -286,8 +286,8 @@ with tab1:
         st.markdown(
             """
         <div class="info-box">
-        <b>Task:</b> Classificazione binaria — ogni articolo viene classificato come <b>FAKE</b> o <b>REAL</b>.<br><br>
-        <b>Dataset:</b> <a href="https://huggingface.co/datasets/GonzaloA/fake_news">GonzaloA/fake_news</a> su Hugging Face —
+        <b>Task:</b> Classificazione binaria, ogni articolo viene classificato come <b>FAKE</b> o <b>REAL</b>.<br><br>
+        <b>Dataset:</b> <a href="https://huggingface.co/datasets/GonzaloA/fake_news">GonzaloA/fake_news</a> su Hugging Face,
         dataset bilanciato di articoli in inglese con etichette 0 = FAKE, 1 = REAL.<br><br>
         <b>Perché questo task?</b> La classificazione di fake news è un problema reale e rilevante,
         con un dataset pubblico e ben strutturato. Permette un confronto diretto tra le due
@@ -304,7 +304,7 @@ with tab1:
         | Modello | DistilBERT | gemma2:2b |
         | Strategia | Fine-tuning | Prompting |
         | Training | Sì (su 1000 esempi) | No |
-        | Accuracy | **0.980** | 0.95 (zero-shot) |
+        | Accuracy | **0.980** | 0.94 (zero-shot, media su 4 run) |
         """)
 
     with col2:
@@ -318,7 +318,7 @@ with tab1:
 
         **gemma2:2b** (Parte 2)
         - Modello Google da 2 miliardi di parametri
-        - Eseguito localmente tramite Ollama — nessuna API esterna
+        - Eseguito localmente tramite Ollama, nessuna API esterna
         - Usato senza training specifico, solo tramite prompt engineering
         """)
 
@@ -349,7 +349,7 @@ with tab1:
         """)
 
 # ══════════════════════════════════════════════════════════════════════════════
-# TAB 2 — FINE-TUNING
+# TAB 2: FINE-TUNING
 # ══════════════════════════════════════════════════════════════════════════════
 
 with tab2:
@@ -554,7 +554,7 @@ with tab2:
                 )
             )
         fig_loss.update_layout(
-            title=f"{cfg['name']} — lr={cfg['lr']:.0e}, batch={cfg['batch']}, epochs={cfg['epochs']}",
+            title=f"{cfg['name']}, lr={cfg['lr']:.0e}, batch={cfg['batch']}, epochs={cfg['epochs']}",
             xaxis_title="Step",
             yaxis_title="Loss",
             plot_bgcolor="white",
@@ -573,14 +573,14 @@ with tab2:
             pd.DataFrame(
                 {
                     "Config": ["baseline (2e-5)", "high_lr (5e-5)"],
-                    "Accuracy": [0.9740, 0.9740],
-                    "Δ": ["-", "="],
+                    "Accuracy": [0.9780, 0.9740],
+                    "Δ": ["-", "-0.004"],
                 }
             ),
             use_container_width=True,
         )
         st.markdown(
-            '<div class="warn-box">LR elevato non migliora — passi di aggiornamento troppo grandi destabilizzano il training a fine epoche.</div>',
+            '<div class="warn-box">LR elevato non migliora, 0.974 contro 0.978 della baseline (2 predizioni su 500).</div>',
             unsafe_allow_html=True,
         )
     with cb:
@@ -589,14 +589,14 @@ with tab2:
             pd.DataFrame(
                 {
                     "Config": ["baseline (16)", "small_batch (8)"],
-                    "Accuracy": [0.9740, 0.9800],
-                    "Δ": ["-", "+0.006"],
+                    "Accuracy": [0.9780, 0.9800],
+                    "Δ": ["-", "+0.002"],
                 }
             ),
             use_container_width=True,
         )
         st.markdown(
-            '<div class="info-box">Batch più piccolo → aggiornamenti dei pesi più frequenti → migliore generalizzazione.</div>',
+            '<div class="info-box">Batch più piccolo, aggiornamenti dei pesi più frequenti. Il guadagno è minimo (1 predizione su 500).</div>',
             unsafe_allow_html=True,
         )
     with cc:
@@ -605,19 +605,19 @@ with tab2:
             pd.DataFrame(
                 {
                     "Config": ["baseline (3)", "more_epochs (5)"],
-                    "Accuracy": [0.9740, 0.9720],
-                    "Δ": ["-", "-0.002"],
+                    "Accuracy": [0.9780, 0.9780],
+                    "Δ": ["-", "="],
                 }
             ),
             use_container_width=True,
         )
         st.markdown(
-            '<div class="warn-box">Più epoche non aiutano — il modello converge già a epoca 2. Epoche extra rischiano overfitting.</div>',
+            '<div class="warn-box">Più epoche non cambiano il risultato. In tutte le configurazioni il checkpoint con la validation loss più bassa è quello di epoca 2.</div>',
             unsafe_allow_html=True,
         )
 
 # ══════════════════════════════════════════════════════════════════════════════
-# TAB 3 — PIPELINE OLLAMA
+# TAB 3: PIPELINE OLLAMA
 # ══════════════════════════════════════════════════════════════════════════════
 
 with tab3:
@@ -783,7 +783,7 @@ with tab3:
                 st.markdown(
                     f"""
                 <div class="warn-box">
-                <b>ID {int(row['id'])} — GT: {row['ground_truth']}</b><br>
+                <b>ID {int(row['id'])}, GT: {row['ground_truth']}</b><br>
                 Zero-shot: <b>{row['zs_label']}</b> &nbsp;|&nbsp; Few-shot: <b>{row['fs_label']}</b> &nbsp;|&nbsp; Corretto: <b>{winner}</b><br><br>
                 <i>{row['text_preview'][:200]}...</i>
                 </div>
@@ -845,7 +845,7 @@ with tab3:
             st.plotly_chart(fig_runs, use_container_width=True)
 
 # ══════════════════════════════════════════════════════════════════════════════
-# TAB 4 — CONFRONTO
+# TAB 4: CONFRONTO
 # ══════════════════════════════════════════════════════════════════════════════
 
 with tab4:
@@ -857,13 +857,14 @@ with tab4:
     # tabella comparativa
     comp_data = {
         "Approccio": ["DistilBERT (best)", "Zero-shot gemma2", "Few-shot gemma2"],
-        "Accuracy": [0.9800, 0.9500, 0.9000],
-        "Acc. FAKE": ["-", "1.00", "0.90"],
-        "Acc. REAL": ["-", "0.90", "0.90"],
+        "Accuracy": [0.9800, 0.9375, 0.9125],
+        "Acc. FAKE": ["-", "1.00", "0.98"],
+        "Acc. REAL": ["-", "0.88", "0.85"],
         "Training": ["Sì", "No", "No"],
         "Risorse": ["Alta", "Bassa", "Bassa"],
     }
     st.dataframe(pd.DataFrame(comp_data), use_container_width=True)
+    st.caption("DistilBERT su 500 articoli di validation, gemma2 come media di 4 run su 20 articoli.")
 
     # bar chart confronto
     fig_comp = go.Figure(
@@ -899,13 +900,13 @@ with tab4:
         st.markdown(
             """
         <div class="warn-box">
-        <b>Caso interessante — zero-shot corretto, few-shot sbaglia</b><br><br>
+        <b>Caso interessante (run 3), zero-shot corretto e few-shot sbaglia</b><br><br>
         <i>"History is once again being made thanks to President Obama. On Wednesday,
         Obama nominated Abid Riaz Qureshi to serve as..."</i><br><br>
         Ground truth: <b>FAKE</b><br>
         Zero-shot: ✅ FAKE<br>
         Few-shot: ❌ REAL<br><br>
-        Il few-shot ha classificato questo articolo come REAL perché il tono istituzionale
+        Nella run 3 il few-shot ha classificato questo articolo come REAL, plausibilmente perché il tono istituzionale
         ricordava gli esempi reali forniti nel prompt. Gli esempi hanno introdotto un bias
         stilistico invece di aiutare.
         </div>
@@ -916,7 +917,7 @@ with tab4:
         st.markdown(
             """
         <div class="warn-box">
-        <b>Errore condiviso — entrambi sbagliano</b><br><br>
+        <b>Errore condiviso, entrambi sbagliano in tutte e 4 le run</b><br><br>
         <i>"hillary clinton campaign still whining about the fbi november —
         the hillary clinton whineaton continues after having m..."</i><br><br>
         Ground truth: <b>REAL</b><br>
@@ -956,14 +957,14 @@ with tab4:
         • hai bisogno di risultati subito<br>
         • il task cambia frequentemente<br>
         • vuoi prototipare rapidamente<br>
-        • 0.95 di accuracy è sufficiente
+        • un'accuracy intorno a 0.94 è sufficiente
         </div>
         """,
             unsafe_allow_html=True,
         )
 
 # ══════════════════════════════════════════════════════════════════════════════
-# TAB 5 — DEMO LIVE
+# TAB 5: DEMO LIVE
 # ══════════════════════════════════════════════════════════════════════════════
 
 with tab5:
@@ -1015,24 +1016,24 @@ with tab5:
 
         with col2:
             st.markdown("### Zero-shot")
-            st.caption("gemma2:2b — nessun esempio")
+            st.caption("gemma2:2b, nessun esempio")
             with st.spinner("interrogazione Ollama..."):
                 try:
                     label = ollama_predict(zero_shot_prompt(user_text))
                     st.markdown(label_badge(label), unsafe_allow_html=True)
                 except Exception as e:
                     st.error(
-                        "Ollama non disponibile — assicurati che `ollama serve` sia in esecuzione"
+                        "Ollama non disponibile, assicurati che `ollama serve` sia in esecuzione"
                     )
 
         with col3:
             st.markdown("### Few-shot")
-            st.caption("gemma2:2b — 4 esempi nel prompt")
+            st.caption("gemma2:2b, 4 esempi nel prompt")
             with st.spinner("interrogazione Ollama..."):
                 try:
                     label = ollama_predict(few_shot_prompt(user_text))
                     st.markdown(label_badge(label), unsafe_allow_html=True)
                 except Exception as e:
                     st.error(
-                        "Ollama non disponibile — assicurati che `ollama serve` sia in esecuzione"
+                        "Ollama non disponibile, assicurati che `ollama serve` sia in esecuzione"
                     )

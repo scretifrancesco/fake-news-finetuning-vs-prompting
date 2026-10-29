@@ -267,7 +267,7 @@ if __name__ == "__main__":
         print_stability(zs, fs)
 
         # dettaglio degli errori nella run finale
-        print(f"\n\ndettaglio errori — run {n}:")
+        print(f"\n\ndettaglio errori, run {n}:")
 
         print("\nerrori zero-shot:")
         print_errors(runs[-1], "zero_shot")
