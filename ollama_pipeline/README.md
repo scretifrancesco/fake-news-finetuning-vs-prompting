@@ -1,4 +1,4 @@
-# Parte 2 — Pipeline Ollama
+# Parte 2: Pipeline Ollama
 
 ## Task scelto e motivazione
 
@@ -75,36 +75,38 @@ pipeline.py
 POST http://localhost:11434/api/generate  (Ollama API)
      │
      ▼
-parse_label()   — normalizza l'output del modello
+parse_label()   # normalizza l'output del modello
      │
      ▼
-results/outputs.json
+results/outputs_run{N}.json
      │
      ▼
-comparator.py  — calcola e stampa le metriche
+comparator.py  # calcola e stampa le metriche
 ```
 
 ## Risultati
 
-| Strategia | Accuracy globale | Accuracy FAKE | Accuracy REAL |
-| --------- | ---------------- | ------------- | ------------- |
-| Zero-shot | **0.95** (19/20) | 1.00          | 0.90          |
-| Few-shot  | 0.90 (18/20)     | 0.90          | 0.90          |
+Accuracy per run, su 20 articoli ciascuna:
 
-Delta few-shot − zero-shot: **−0.05**
+| Strategia | Run 1 | Run 2 | Run 3 | Run 4 | Media     |
+| --------- | ----- | ----- | ----- | ----- | --------- |
+| Zero-shot | 0.95  | 0.90  | 0.95  | 0.95  | **0.938** |
+| Few-shot  | 0.95  | 0.95  | 0.85  | 0.90  | 0.913     |
+
+Accuracy media per classe: zero-shot 1.00 su FAKE e 0.88 su REAL, few-shot 0.98 su FAKE e 0.85 su REAL.
 
 ### Confronto con la Parte 1
 
 | Approccio                         | Accuracy |
 | --------------------------------- | -------- |
-| Zero-shot (gemma2:2b)             | 0.95     |
-| Few-shot (gemma2:2b)              | 0.90     |
-| Fine-tuning DistilBERT — baseline | 0.978    |
-| Fine-tuning DistilBERT — best     | **0.98** |
+| Zero-shot (gemma2:2b, media)      | 0.938    |
+| Few-shot (gemma2:2b, media)       | 0.913    |
+| Fine-tuning DistilBERT, baseline  | 0.978    |
+| Fine-tuning DistilBERT, best      | **0.98** |
 
 ## Esempio di input/output
 
-**Input** (id 1, GT = FAKE):
+**Input** (id 1, GT = FAKE, run 3):
 
 > History is once again being made thanks to President Obama. On Wednesday,
 > Obama nominated Abid Riaz Qureshi to serve as...
@@ -114,7 +116,7 @@ Delta few-shot − zero-shot: **−0.05**
 | Zero-shot | `FAKE`     | FAKE          | ✓         |
 | Few-shot  | `REAL`     | REAL          | ✗         |
 
-**Input** (id 14, GT = REAL):
+**Input** (id 14, GT = REAL, stesso esito in tutte le run):
 
 > hillary clinton campaign still whining about the fbi november — the hillary
 > clinton whineaton continues after having m...
@@ -126,19 +128,20 @@ Delta few-shot − zero-shot: **−0.05**
 
 ## Considerazioni sui risultati
 
-**Zero-shot supera few-shot (0.95 vs 0.90).**
-Risultato controintuitivo ma spiegabile: i 4 esempi usati nel few-shot sono
-costruiti su notizie false stilisticamente ovvie (titoli sensazionalistici,
-teorie del complotto esplicite). Quando il modello ha incontrato un articolo
-dal tono istituzionale ma falso (id 1), gli esempi l'hanno fuorviato
-classificandolo REAL per analogia stilistica.
+**Zero-shot supera few-shot in media (0.94 vs 0.91).**
+La differenza corrisponde a circa mezza predizione su 20 e va letta con
+cautela. I 4 esempi usati nel few-shot sono costruiti su notizie false
+stilisticamente ovvie (titoli sensazionalistici, teorie del complotto
+esplicite), ed è plausibile che questo spieghi il caso dell'articolo id 1,
+dal tono istituzionale ma falso, che nella run 3 il few-shot classifica come
+REAL per analogia stilistica.
 
 **L'errore condiviso (id 14)** mostra un limite strutturale del prompting:
 articoli reali scritti con linguaggio aggressivo o partigiano vengono
 classificati come fake da entrambe le strategie. Questo tipo di errore
 richiederebbe esempi di addestramento specifici per essere corretto.
 
-**Il fine-tuning rimane superiore (0.98 vs 0.95)**, ma il gap è contenuto
+**Il fine-tuning rimane superiore (0.98 vs 0.94)**, ma il gap è contenuto
 considerando che gemma2:2b non ha ricevuto nessun training specifico sul task.
 Il prompting risulta quindi una baseline solida e immediata, utile soprattutto
 quando non si dispone di dati etichettati sufficienti per il fine-tuning.

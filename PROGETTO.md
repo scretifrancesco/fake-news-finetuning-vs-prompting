@@ -1,56 +1,55 @@
-# Progetto finale — LLM Course 2026
+# Progetto finale, corso LLM e AI Generativa 2026
 
 **Autori:** Francesco Rolando & Francesco Screti  
 **Repository:** github.com/francescorolando/llm_fake_news
 
 ---
 
-## Parte 1 — Fine-tuning
+## Parte 1: Fine-tuning
 
 ### Modello scelto e motivazione
 
-**distilbert-base-uncased** — versione distillata di BERT con il 40% di parametri in meno e il 97% delle performance originali. Scelto per la leggerezza (66.9M parametri), la velocità di training su hardware consumer e le performance competitive per task di classificazione testuale. L'architettura encoder-only è ideale per task di classificazione in cui non è necessaria la generazione di testo.
+**distilbert-base-uncased**, versione distillata di BERT con il 40% di parametri in meno e il 97% delle performance originali. Scelto per la leggerezza (66.9M parametri), la velocità di training su hardware consumer e le performance competitive per task di classificazione testuale. L'architettura encoder-only è ideale per task di classificazione in cui non è necessaria la generazione di testo.
 
 ### Dataset scelto e motivazione
 
-**GonzaloA/fake_news** (Hugging Face) — dataset di articoli in inglese con etichette binarie: `0 = FAKE`, `1 = REAL`. Scelto per la disponibilità pubblica, il bilanciamento delle classi e la rilevanza pratica del task. Sono stati usati 1000 esempi per il training e 500 per la validation, campionati con seed=42 per riproducibilità.
+**GonzaloA/fake_news** (Hugging Face), dataset di articoli in inglese con etichette binarie: `0 = FAKE`, `1 = REAL`. Scelto per la disponibilità pubblica, il bilanciamento delle classi e la rilevanza pratica del task. Sono stati usati i primi 1000 esempi dello split di training e i primi 500 di quello di validation, con seed 42 per la riproducibilità del training.
 
 ### Risultati ottenuti
 
 | Configurazione  | LR   | Batch | Epochs | Accuracy   |
 | --------------- | ---- | ----- | ------ | ---------- |
-| baseline        | 2e-5 | 16    | 3      | 0.9740     |
+| baseline        | 2e-5 | 16    | 3      | 0.9780     |
 | high_lr         | 5e-5 | 16    | 3      | 0.9740     |
-| more_epochs     | 2e-5 | 16    | 5      | 0.9720     |
+| more_epochs     | 2e-5 | 16    | 5      | 0.9780     |
 | **small_batch** | 2e-5 | **8** | 3      | **0.9800** |
 
-La configurazione migliore è **small_batch** con accuracy 0.9800. Il batch size ridotto aumenta la frequenza degli aggiornamenti dei pesi, migliorando la generalizzazione. Il learning rate elevato non porta benefici, e aumentare le epoche non migliora le performance — il modello converge già alla seconda epoca.
+La configurazione migliore è **small_batch** con accuracy 0.9800, ma le differenze tra le configurazioni sono minime (al massimo 3 predizioni su 500). Il learning rate elevato non porta benefici. In tutte e quattro le configurazioni il checkpoint con la validation loss più bassa è quello della seconda epoca, per cui aumentare le epoche non cambia il risultato.
 
 ### Difficoltà incontrate
 
 - **Overfitting precoce**: Data l'elevata densità di segnale del dataset, il modello tendeva a convergere già alla seconda epoca. È stato necessario monitorare attentamente la validation loss per individuare il punto di saturazione ed evitare la memorizzazione del noise del training set.
-- **Gestione del bilanciamento nel campionamento**: Nonostante il dataset sia bilanciato, il subset da 1000 esempi ha richiesto una strategia di campionamento stratificato per mantenere la distribuzione originale delle classi e prevenire bias nelle metriche.
 - **Ottimizzazione della lunghezza delle sequenze**: Bilanciare il parametro `max_length` per includere sufficiente contesto dagli articoli (spesso molto lunghi) senza eccedere i limiti di memoria della GPU durante i passaggi di backpropagation.
 
 ---
 
-## Parte 2 — Pipeline Ollama
+## Parte 2: Pipeline Ollama
 
 ### Task scelto e motivazione
 
-**Classificazione binaria di fake news** — stesso task della Parte 1, scelto deliberatamente per rendere possibile un confronto diretto tra fine-tuning e prompting sullo stesso problema. Questo permette di valutare quanto un LLM generalista senza training specifico si avvicini alle performance di un modello fine-tuned.
+**Classificazione binaria di fake news**, stesso task della Parte 1, scelto deliberatamente per rendere possibile un confronto diretto tra fine-tuning e prompting sullo stesso problema. Questo permette di valutare quanto un LLM generalista senza training specifico si avvicini alle performance di un modello fine-tuned.
 
 ### Strategie di prompting usate
 
-**Zero-shot** — il modello riceve solo l'istruzione e il testo da classificare, senza esempi. Il prompt richiede esplicitamente una risposta di una sola parola (FAKE o REAL).
+**Zero-shot**. Il modello riceve solo l'istruzione e il testo da classificare, senza esempi. Il prompt richiede esplicitamente una risposta di una sola parola (FAKE o REAL).
 
-**Few-shot** — il modello riceve l'istruzione seguita da 4 esempi etichettati (2 FAKE, 2 REAL) prima del testo da classificare. Gli esempi sono stati scelti per coprire stili diversi di notizie false e reali.
+**Few-shot**. Il modello riceve l'istruzione seguita da 4 esempi etichettati (2 FAKE, 2 REAL) prima del testo da classificare. Gli esempi sono stati scelti per coprire stili diversi di notizie false e reali.
 
 Il confronto tra le due strategie sullo stesso input è implementato in `pipeline.py` e analizzato in `comparator.py`.
 
 ### Esempio di input/output
 
-**Input:**
+**Input** (run 3):
 
 > "History is once again being made thanks to President Obama. On Wednesday, Obama nominated Abid Riaz Qureshi to serve as federal judge, making him the first Muslim ever nominated for a federal judgeship in United States history."
 
@@ -74,12 +73,14 @@ Ground truth: **REAL**
 
 ### Considerazioni sui risultati
 
+Valori medi su 4 run, ciascuna su 20 articoli (10 FAKE e 10 REAL).
+
 | Strategia | Accuracy  | Accuracy FAKE | Accuracy REAL |
 | --------- | --------- | ------------- | ------------- |
-| Zero-shot | **0.950** | 1.00          | 0.90          |
-| Few-shot  | 0.900     | 0.90          | 0.90          |
+| Zero-shot | **0.938** | 1.00          | 0.88          |
+| Few-shot  | 0.913     | 0.98          | 0.85          |
 
-**Zero-shot supera few-shot (0.95 vs 0.90).** Risultato controintuitivo ma spiegabile: gli esempi del few-shot erano stilisticamente stereotipati (titoli sensazionalistici, teorie del complotto esplicite). Un articolo dal tono istituzionale ma falso è stato classificato come reale per analogia stilistica con gli esempi forniti.
+**Zero-shot supera few-shot (0.94 vs 0.91)**, ma la differenza media corrisponde a circa mezza predizione su 20 e va letta con cautela. Gli esempi del few-shot sono stilisticamente stereotipati (titoli sensazionalistici, teorie del complotto esplicite), ed è plausibile che questo spieghi il caso dell'articolo id 1, dal tono istituzionale ma falso, che nella run 3 il few-shot classifica come reale.
 
 **L'errore condiviso** (articolo Clinton) mostra un limite strutturale del prompting: articoli reali scritti con linguaggio aggressivo o partigiano vengono classificati come fake da entrambe le strategie. Questo tipo di errore richiederebbe esempi di addestramento specifici.
 
@@ -87,11 +88,11 @@ Ground truth: **REAL**
 
 | Approccio             | Accuracy  |
 | --------------------- | --------- |
-| Zero-shot (gemma2:2b) | 0.950     |
-| Few-shot (gemma2:2b)  | 0.900     |
+| Zero-shot (gemma2:2b) | 0.938     |
+| Few-shot (gemma2:2b)  | 0.913     |
 | DistilBERT fine-tuned | **0.980** |
 
-Il fine-tuning rimane superiore, ma il gap è contenuto considerando che gemma2:2b non ha ricevuto alcun training specifico sul task. Il prompting è una baseline solida quando non si dispone di dati etichettati.
+Il fine-tuning rimane superiore, ma il gap è contenuto considerando che gemma2:2b non ha ricevuto alcun training specifico sul task. Il confronto è indicativo, perché DistilBERT è valutato su 500 articoli e gemma2:2b su 20. Il prompting è una baseline solida quando non si dispone di dati etichettati.
 
 ---
 
@@ -105,8 +106,8 @@ Il fine-tuning rimane superiore, ma il gap è contenuto considerando che gemma2:
 
 **Modelli:**
 
-- Parte 1: distilbert-base-uncased — encoder-only leggero e performante per classificazione
-- Parte 2: gemma2:2b via Ollama — LLM locale senza dipendenze da API esterne
+- Parte 1: distilbert-base-uncased, encoder-only leggero e performante per classificazione
+- Parte 2: gemma2:2b via Ollama, LLM locale senza dipendenze da API esterne
 
 ### 2. Approccio e sviluppo
 
@@ -162,7 +163,7 @@ comparator.py → metriche, stabilità multi-run, disaccordi
 
 | Strategia | Accuracy  | FAKE | REAL |
 | --------- | --------- | ---- | ---- |
-| Zero-shot | **0.950** | 1.00 | 0.90 |
-| Few-shot  | 0.900     | 0.90 | 0.90 |
+| Zero-shot | **0.938** | 1.00 | 0.88 |
+| Few-shot  | 0.913     | 0.98 | 0.85 |
 
-Zero-shot supera few-shot. La qualità degli esempi nel few-shot è determinante: esempi stereotipati introducono bias stilistici che penalizzano articoli ambigui.
+Zero-shot supera few-shot di poco (media su 4 run). La qualità degli esempi nel few-shot è determinante: esempi stereotipati introducono bias stilistici che penalizzano articoli ambigui.
