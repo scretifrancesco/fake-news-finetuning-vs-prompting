@@ -1,0 +1,302 @@
+[
+  {
+    "id": 0,
+    "text_preview": "21st Century Wire says By cow-towing to students  over-sensitivity to free speech and seemingly a prenatal requirement for  safe spaces  on campus   academics and university administrators are unknowi",
+    "ground_truth": "FAKE",
+    "zero_shot": {
+      "raw": "FAKE",
+      "label": "FAKE",
+      "correct": true
+    },
+    "few_shot": {
+      "raw": "FAKE",
+      "label": "FAKE",
+      "correct": true
+    }
+  },
+  {
+    "id": 1,
+    "text_preview": "History is once again being made thanks to President Obama. On Wednesday, Obama nominated Abid Riaz Qureshi to serve as a judge on the U.S. District Court for the District of Columbia, filling the vac",
+    "ground_truth": "FAKE",
+    "zero_shot": {
+      "raw": "FAKE",
+      "label": "FAKE",
+      "correct": true
+    },
+    "few_shot": {
+      "raw": "FAKE",
+      "label": "FAKE",
+      "correct": true
+    }
+  },
+  {
+    "id": 2,
+    "text_preview": "The south s red states have been on a right-wing tear lately, and despite national outrag shows no signs of slowing down. The latest to draw the ire of the non-bigoted public is Mississippi Governor P",
+    "ground_truth": "FAKE",
+    "zero_shot": {
+      "raw": "FAKE",
+      "label": "FAKE",
+      "correct": true
+    },
+    "few_shot": {
+      "raw": "FAKE",
+      "label": "FAKE",
+      "correct": true
+    }
+  },
+  {
+    "id": 3,
+    "text_preview": "Changing the name of something doesn t change the TRUTH of what it is female genital mutilation is the name used for the secretive practice in the Muslim world  of making sure young girls never have a",
+    "ground_truth": "FAKE",
+    "zero_shot": {
+      "raw": "FAKE",
+      "label": "FAKE",
+      "correct": true
+    },
+    "few_shot": {
+      "raw": "FAKE",
+      "label": "FAKE",
+      "correct": true
+    }
+  },
+  {
+    "id": 4,
+    "text_preview": "Republicans love to say that they are the party of God. More than a few GOP presidential candidates in the last year have said that God values their bigoted, conservative  family values  and assorted ",
+    "ground_truth": "FAKE",
+    "zero_shot": {
+      "raw": "FAKE",
+      "label": "FAKE",
+      "correct": true
+    },
+    "few_shot": {
+      "raw": "FAKE",
+      "label": "FAKE",
+      "correct": true
+    }
+  },
+  {
+    "id": 5,
+    "text_preview": "Right-ing paranoid whackjob Pat Boone has declared SNL is now venerating Satan, because of a parody skit they ran called  God is a Boob Man.  The skit was making some light-hearted humor at recent att",
+    "ground_truth": "FAKE",
+    "zero_shot": {
+      "raw": "FAKE",
+      "label": "FAKE",
+      "correct": true
+    },
+    "few_shot": {
+      "raw": "FAKE",
+      "label": "FAKE",
+      "correct": true
+    }
+  },
+  {
+    "id": 6,
+    "text_preview": "Newt Gingrich completely disrespected Megyn Kelly, yet she is the one receiving threats because she refused to be treated like shit by an asshole.During her show on Tuesday night, Kelly tried to expla",
+    "ground_truth": "FAKE",
+    "zero_shot": {
+      "raw": "FAKE",
+      "label": "FAKE",
+      "correct": true
+    },
+    "few_shot": {
+      "raw": "FAKE",
+      "label": "FAKE",
+      "correct": true
+    }
+  },
+  {
+    "id": 7,
+    "text_preview": "Just so we have this straight a Somali cab driver had already repeatedly threatened to decapitate police officers earlier in the year, yet he may still be driving a cab? We re gonna go out on a limb h",
+    "ground_truth": "FAKE",
+    "zero_shot": {
+      "raw": "FAKE",
+      "label": "FAKE",
+      "correct": true
+    },
+    "few_shot": {
+      "raw": "FAKE",
+      "label": "FAKE",
+      "correct": true
+    }
+  },
+  {
+    "id": 8,
+    "text_preview": "Hillary Clinton s pointing the finger at the victims of the Benghazi attack the families of the four heroes who died there. She says,  not me  when asked who s lying about Benghazi. I have to say with",
+    "ground_truth": "FAKE",
+    "zero_shot": {
+      "raw": "FAKE",
+      "label": "FAKE",
+      "correct": true
+    },
+    "few_shot": {
+      "raw": "FAKE",
+      "label": "FAKE",
+      "correct": true
+    }
+  },
+  {
+    "id": 9,
+    "text_preview": "It s been a well-known fact for quite some time that Donald Trump doesn t handle criticism particularly well, but what has become glaringly obvious during his ten-month tenure as the President of the ",
+    "ground_truth": "FAKE",
+    "zero_shot": {
+      "raw": "FAKE",
+      "label": "FAKE",
+      "correct": true
+    },
+    "few_shot": {
+      "raw": "FAKE",
+      "label": "FAKE",
+      "correct": true
+    }
+  },
+  {
+    "id": 10,
+    "text_preview": "WASHINGTON (Reuters) - Republican presidential candidate Rick Santorum plans to join party front-runner Donald Trump at a rally in Iowa later on Thursday, his campaign said.  Santorum, a former U.S. l",
+    "ground_truth": "REAL",
+    "zero_shot": {
+      "raw": "REAL",
+      "label": "REAL",
+      "correct": true
+    },
+    "few_shot": {
+      "raw": "REAL",
+      "label": "REAL",
+      "correct": true
+    }
+  },
+  {
+    "id": 11,
+    "text_preview": "HOMESTEAD, Fla. (Reuters) - This sprawling suburb on Florida s southern tip was nearly wiped flat by one hurricane 25 years ago. Now its residents hope they have rebuilt strong enough to withstand ano",
+    "ground_truth": "REAL",
+    "zero_shot": {
+      "raw": "REAL",
+      "label": "REAL",
+      "correct": true
+    },
+    "few_shot": {
+      "raw": "REAL",
+      "label": "REAL",
+      "correct": true
+    }
+  },
+  {
+    "id": 12,
+    "text_preview": "ANKARA (Reuters) - Turkey s BDDK banking regulator urged the public on Saturday to ignore rumors about financial institutions, saying Turkey s banks were functioning well. The BDDK s statement appeare",
+    "ground_truth": "REAL",
+    "zero_shot": {
+      "raw": "REAL",
+      "label": "REAL",
+      "correct": true
+    },
+    "few_shot": {
+      "raw": "REAL",
+      "label": "REAL",
+      "correct": true
+    }
+  },
+  {
+    "id": 13,
+    "text_preview": "NAIROBI (Reuters) - Kenya s opposition leader Raila Odinga decided not to stand in next week s presidential election to avoid defeat rather than for reasons of principle, the deputy president said on ",
+    "ground_truth": "REAL",
+    "zero_shot": {
+      "raw": "REAL",
+      "label": "REAL",
+      "correct": true
+    },
+    "few_shot": {
+      "raw": "FAKE",
+      "label": "FAKE",
+      "correct": false
+    }
+  },
+  {
+    "id": 14,
+    "text_preview": "hillary clinton campaign still whining about the fbi november   \nthe hillary clinton whineaton continues \nafter having mobilized mulltiple exofficials and media types to attack the fbi the clinton cam",
+    "ground_truth": "REAL",
+    "zero_shot": {
+      "raw": "FAKE",
+      "label": "FAKE",
+      "correct": false
+    },
+    "few_shot": {
+      "raw": "FAKE",
+      "label": "FAKE",
+      "correct": false
+    }
+  },
+  {
+    "id": 15,
+    "text_preview": "ZURICH (Reuters) - More than one in three Swiss feel uncomfortable around people perceived to be  different  because of their nationality, religion, skin color or other factors, a government survey fo",
+    "ground_truth": "REAL",
+    "zero_shot": {
+      "raw": "REAL",
+      "label": "REAL",
+      "correct": true
+    },
+    "few_shot": {
+      "raw": "REAL",
+      "label": "REAL",
+      "correct": true
+    }
+  },
+  {
+    "id": 16,
+    "text_preview": "WASHINGTON (Reuters) - President Donald Trump’s commission to investigate possible election fraud will convene this month, a government notice said on Friday, as more U.S. states have refused to hand ",
+    "ground_truth": "REAL",
+    "zero_shot": {
+      "raw": "REAL",
+      "label": "REAL",
+      "correct": true
+    },
+    "few_shot": {
+      "raw": "REAL",
+      "label": "REAL",
+      "correct": true
+    }
+  },
+  {
+    "id": 17,
+    "text_preview": "PRISTINA (Reuters) - Kosovo police arrested three lawmakers on Friday, including the popular main opposition leader whom they handcuffed in the street, after the three failed to appear in court on cha",
+    "ground_truth": "REAL",
+    "zero_shot": {
+      "raw": "REAL",
+      "label": "REAL",
+      "correct": true
+    },
+    "few_shot": {
+      "raw": "REAL",
+      "label": "REAL",
+      "correct": true
+    }
+  },
+  {
+    "id": 18,
+    "text_preview": "KUALA LUMPUR (Reuters) - Malaysia on Tuesday summoned Myanmar s ambassador to express displeasure over violence in Myanmar s Rakhine State, which has displaced nearly 125,000 Rohingya Muslims. Foreign",
+    "ground_truth": "REAL",
+    "zero_shot": {
+      "raw": "REAL",
+      "label": "REAL",
+      "correct": true
+    },
+    "few_shot": {
+      "raw": "REAL",
+      "label": "REAL",
+      "correct": true
+    }
+  },
+  {
+    "id": 19,
+    "text_preview": "SANTO DOMINGO (Reuters) - Venezuela and the United States will immediately start talks to ease tensions between the two countries and does not support its ouster from a regional diplomatic bloc, U.S. ",
+    "ground_truth": "REAL",
+    "zero_shot": {
+      "raw": "REAL",
+      "label": "REAL",
+      "correct": true
+    },
+    "few_shot": {
+      "raw": "REAL",
+      "label": "REAL",
+      "correct": true
+    }
+  }
+]
