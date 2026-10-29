@@ -2,7 +2,7 @@
 
 Fake news classification using two approaches: fine-tuning of DistilBERT and a local LLM inference pipeline via Ollama with zero-shot and few-shot prompting strategies.
 
-Built for the LLM Course 2026 — University of Turin.
+Built for the LLM and GenAI Course 2026, University of Turin.
 
 **Authors:** Francesco Rolando & Francesco Screti
 
@@ -16,7 +16,7 @@ llm_fake_news/
 ├── PROGETTO.md               # course assignment report (Italian)
 ├── app.py                    # Streamlit dashboard + live demo
 ├── .streamlit/config.toml
-├── fine_tuning/              # Part 1 — DistilBERT fine-tuning
+├── fine_tuning/              # Part 1: DistilBERT fine-tuning
 │   ├── config.py
 │   ├── train.py
 │   ├── requirements.txt
@@ -29,7 +29,7 @@ llm_fake_news/
 │   │   ├── metrics.py
 │   │   └── trainer.py
 │   └── results/              # checkpoints (not versioned)
-└── ollama_pipeline/          # Part 2 — Ollama pipeline
+└── ollama_pipeline/          # Part 2: Ollama pipeline
     ├── README.md
     ├── prompts.py
     ├── pipeline.py
@@ -113,9 +113,9 @@ streamlit run app.py
 
 `gemma2:2b` on 20 samples from the same dataset, 4 runs per strategy.
 
-| Strategy  | Mean accuracy | Range       |
-| --------- | ------------- | ----------- |
-| Zero-shot | 0.94          | 0.90 – 0.95 |
-| Few-shot  | 0.91          | 0.85 – 0.95 |
+| Strategy  | Mean accuracy | Min  | Max  |
+| --------- | ------------- | ---- | ---- |
+| Zero-shot | 0.94          | 0.90 | 0.95 |
+| Few-shot  | 0.91          | 0.85 | 0.95 |
 
 The two parts are evaluated on sets of different size (500 vs 20 examples), so the comparison between fine-tuning and prompting is indicative. On 20 examples a difference of 0.05 corresponds to a single prediction.
