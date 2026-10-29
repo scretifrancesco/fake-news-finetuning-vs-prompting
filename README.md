@@ -100,7 +100,7 @@ streamlit run app.py
 
 ### DistilBERT fine-tuning
 
-`distilbert-base-uncased` on [`GonzaloA/fake_news`](https://huggingface.co/datasets/GonzaloA/fake_news), trained on 1,000 sampled examples and evaluated on 500 validation examples (seed 42, max length 256).
+`distilbert-base-uncased` on [`GonzaloA/fake_news`](https://huggingface.co/datasets/GonzaloA/fake_news), trained on the first 1,000 training examples and evaluated on the first 500 validation examples (seed 42, max length 256).
 
 | Config      | Learning rate | Batch | Epochs | Val. accuracy |
 | ----------- | ------------- | ----- | ------ | ------------- |
