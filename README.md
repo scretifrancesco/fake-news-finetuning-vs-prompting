@@ -6,11 +6,6 @@ Built for the LLM and GenAI Course 2026, University of Turin.
 
 **Authors:** Francesco Rolando & Francesco Screti
 
-<p align="center">
-  <img src="docs/demo.png" alt="Live demo: DistilBERT, zero-shot and few-shot predictions on the same article" width="49%" />
-  <img src="docs/comparison.png" alt="Accuracy comparison between fine-tuning and prompting" width="49%" />
-</p>
-
 ---
 
 ## Project Structure
