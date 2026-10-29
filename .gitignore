@@ -3,4 +3,8 @@ __pycache__/
 .venv/
 .vscode/
 .DS_Store
-fine_tuning/results/
+# checkpoints are not versioned (about 3 GB), training logs are
+fine_tuning/results/**
+!fine_tuning/results/*/
+!fine_tuning/results/*/checkpoint-*/
+!fine_tuning/results/*/checkpoint-*/trainer_state.json
