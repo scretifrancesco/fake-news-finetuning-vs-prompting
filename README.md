@@ -6,6 +6,11 @@ Built for the LLM and GenAI Course 2026, University of Turin.
 
 **Authors:** Francesco Rolando & Francesco Screti
 
+<p align="center">
+  <img src="docs/demo.png" alt="Live demo: DistilBERT, zero-shot and few-shot predictions on the same article" width="49%" />
+  <img src="docs/comparison.png" alt="Accuracy comparison between fine-tuning and prompting" width="49%" />
+</p>
+
 ---
 
 ## Project Structure
@@ -58,16 +63,22 @@ Install Ollama from [ollama.com](https://ollama.com), then:
 ollama pull gemma2:2b
 ```
 
-### DistilBERT Checkpoints
+### DistilBERT model
 
-Checkpoints are not versioned due to size (~3GB). Regenerate by running:
+Model checkpoints are not versioned because of their size (about 3 GB), while the training logs are, so the loss curves in the dashboard work out of the box. To use DistilBERT in the live demo, either retrain it (about 90 minutes):
 
 ```bash
 cd fine_tuning
 python train.py
 ```
 
-Training takes approximately 90 minutes. Without checkpoints, the app works but the fine-tuning section and DistilBERT live demo will not be available.
+or point the app to a fine-tuned model on the Hugging Face Hub:
+
+```bash
+export FAKE_NEWS_MODEL=<hugging-face-model-id>
+```
+
+Without a model, the rest of the dashboard and the Ollama part of the live demo still work.
 
 ---
 
